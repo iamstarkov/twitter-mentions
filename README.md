@@ -16,28 +16,43 @@
 ```js
 import twitterMentions from 'twitter-mentions';
 
-twitterMentions('unicorns'); // unicorns
+twitterMentions(tokens, '424125604925956096', (err, mentions) => {
+  if (err) throw err;
+  console.log(mentions); // [{…}, {…}, …]
+});
 ```
 
 ## API
 
-### twitterMentions(input, [options])
+### function getMentions(tokens, lastMentionToGet, cb)
 
-#### input
+As far as `statuses/mentions_timeline` endpoint requires authentication with user context only, it means there is no way to specify which mentions you want to get, once you get tokens after some user authentication, you will be able to get mentions only for this user.
+
+#### tokens
+
+*Required*  
+Type: `Object`
+
+Valid [Twitter developer credentials (tokens)][how-to-get]
+in the form of a set of consumer and access tokens/keys.
+You can use [twitter-tokens][tokens], to simplify getting tokens.
+
+[how-to-get]: https://iamstarkov.com/get-twitter-tokens/
+[tokens]: https://www.npmjs.com/package/twitter-tokens
+
+#### lastTweetToGet
 
 *Required*  
 Type: `String`
 
-Lorem ipsum.
+ID of the last mention to get.
 
-#### options
+#### cb(err, mentions)
 
-##### foo
+*Required*  
+Type: `Function`
 
-Type: `Boolean`  
-Default: `false`
-
-Lorem ipsum.
+Callback for you.
 
 ## License
 
