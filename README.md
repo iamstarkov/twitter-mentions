@@ -15,6 +15,7 @@
 
 ```js
 import twitterMentions from 'twitter-mentions';
+import tokens from 'twitter-tokens';
 
 twitterMentions(tokens, '424125604925956096', (err, mentions) => {
   if (err) throw err;
@@ -40,7 +41,7 @@ You can use [twitter-tokens][tokens], to simplify getting tokens.
 [how-to-get]: https://iamstarkov.com/get-twitter-tokens/
 [tokens]: https://www.npmjs.com/package/twitter-tokens
 
-#### lastTweetToGet
+#### lastMentionToGet
 
 *Required*  
 Type: `String`
