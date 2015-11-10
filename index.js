@@ -1,6 +1,6 @@
 import Twitter from 'twit';
 import Bignum from 'bn.js';
-import { last, concat, propEq, slice, findIndex, merge, isEmpty } from 'ramda';
+import R, { last, concat, propEq, slice, findIndex, merge, isEmpty } from 'ramda';
 
 function bignumDec(number) {
   return (new Bignum(number).sub(new Bignum('1'))).toString();
@@ -12,7 +12,7 @@ function getNextMentionsOptions(options, mentions) {
 }
 
 function accumulate(get, options, isLastMention, mentions, cb) {
-  const findTargetIndex = findLastIndex(isLastMention);
+  const findTargetIndex = R.findLastIndex(isLastMention);
   const nextMentionsOptions = getNextMentionsOptions(options, mentions);
   get(nextMentionsOptions, (err, res) => {
     if (err) return cb(err);
