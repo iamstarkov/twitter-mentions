@@ -46,7 +46,7 @@ You can use [twitter-tokens][tokens], to simplify getting tokens.
 *Required*  
 Type: `String`
 
-
+`id_str` of tweet or mention since which you want to get latest mentions.
 
 > Return results with an ID greater than (that is, more recent than) the specified ID. There are limits to the number of Tweets which can be accessed through the API. If the limit of Tweets has occured since the `since_id`, the `since_id` will be forced to the oldest ID available.  
 > — [Twitter API `statuses/mentions_timeline`](https://dev.twitter.com/rest/reference/get/statuses/mentions_timeline)
