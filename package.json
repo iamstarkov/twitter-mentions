@@ -1,6 +1,6 @@
 {
   "name": "twitter-mentions",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "get latest mentions for target username",
   "main": "index.es5.js",
   "scripts": {
