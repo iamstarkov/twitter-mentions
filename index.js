@@ -1,36 +1,26 @@
 import Twitter from 'twit';
-import Bignum from 'bn.js';
-import { last, concat, propEq, slice, findIndex, merge, isEmpty } from 'ramda';
+import dec from 'bignum-dec';
+import { pipe, last, prop, concat, merge, isEmpty } from 'ramda';
 
-function bignumDec(number) {
-  return (new Bignum(number).sub(new Bignum('1'))).toString();
-}
+const getNextOptions = (options, mentions) =>
+  (isEmpty(mentions))
+    ? options
+    : merge(options, { max_id: pipe(last, prop('id_str'), dec)(mentions) });
 
-function getNextMentionsOptions(options, mentions) {
-  if (isEmpty(mentions)) return options;
-  return merge(options, { max_id: bignumDec(last(mentions).id_str) });
-}
-
-function accumulate(get, options, lastMentionToGet, mentions, cb) {
-  const isTarget = propEq('id_str', lastMentionToGet);
-  const findTargetIndex = findIndex(isTarget);
-  const nextMentionsOptions = getNextMentionsOptions(options, mentions);
-  get(nextMentionsOptions, (err, res) => {
+function accumulate(get, options, mentions, cb) {
+  const nextOptions = getNextOptions(options, mentions);
+  get(nextOptions, (err, res) => {
     if (err) return cb(err);
-    if (isEmpty(res)) {
-      return cb(new Error('Target mention is too far away'));
-    }
     const accumulatedMentions = concat(mentions, res);
-    if (findTargetIndex(accumulatedMentions) !== -1) {
-      return cb(null, slice(0, findTargetIndex(accumulatedMentions) + 1, accumulatedMentions));
-    }
-    return accumulate(get, nextMentionsOptions, lastMentionToGet, accumulatedMentions, cb);
+    return (isEmpty(res))
+        ? cb(null, accumulatedMentions)
+        : accumulate(get, nextOptions, accumulatedMentions, cb);
   });
 }
 
-export default function getMentions(tokens, lastMentionToGet, cb) {
+export default function getMentions(tokens, sinceId, cb) {
   const client = new Twitter(tokens);
   const get = client.get.bind(client, 'statuses/mentions_timeline');
-  const options = { trim_user: true, count: 200 };
-  return accumulate(get, options, lastMentionToGet, [], cb);
+  const options = { trim_user: true, count: 200, since_id: sinceId };
+  return accumulate(get, options, [], cb);
 }

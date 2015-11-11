@@ -5,7 +5,7 @@
 [![Coveralls Status][coveralls-image]][coveralls-url]
 [![Dependency Status][depstat-image]][depstat-url]
 
-> get mentions for target username
+> get latest mentions for target username
 
 ## Install
 
@@ -17,7 +17,7 @@
 import twitterMentions from 'twitter-mentions';
 import tokens from 'twitter-tokens';
 
-twitterMentions(tokens, '424125604925956096', (err, mentions) => {
+twitterMentions(tokens, '424119506508980224', (err, mentions) => {
   if (err) throw err;
   console.log(mentions); // [{…}, {…}, …]
 });
@@ -25,7 +25,7 @@ twitterMentions(tokens, '424125604925956096', (err, mentions) => {
 
 ## API
 
-### function getMentions(tokens, lastMentionToGet, cb)
+### getMentions(tokens, sinceId, cb)
 
 As far as `statuses/mentions_timeline` endpoint requires authentication with user context only, it means there is no way to specify which mentions you want to get, once you get tokens after some user authentication, you will be able to get mentions only for this user.
 
@@ -41,12 +41,16 @@ You can use [twitter-tokens][tokens], to simplify getting tokens.
 [how-to-get]: https://iamstarkov.com/get-twitter-tokens/
 [tokens]: https://www.npmjs.com/package/twitter-tokens
 
-#### lastMentionToGet
+#### sinceId
 
 *Required*  
 Type: `String`
 
-ID of the last mention to get.
+
+
+> Return results with an ID greater than (that is, more recent than) the specified ID. There are limits to the number of Tweets which can be accessed through the API. If the limit of Tweets has occured since the `since_id`, the `since_id` will be forced to the oldest ID available.  
+> — [Twitter API `statuses/mentions_timeline`](https://dev.twitter.com/rest/reference/get/statuses/mentions_timeline)
+
 
 #### cb(err, mentions)
 

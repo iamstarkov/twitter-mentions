@@ -1,7 +1,7 @@
 {
   "name": "twitter-mentions",
   "version": "1.0.1",
-  "description": "get mentions for target username",
+  "description": "get latest mentions for target username",
   "main": "index.es5.js",
   "scripts": {
     "coverage": "isparta cover _mocha index.js -- --require babel-core/register",
@@ -47,7 +47,7 @@
     "twitter-tokens": "^1.0.2"
   },
   "dependencies": {
-    "bn.js": "^4.1.1",
+    "bignum-dec": "^1.0.1",
     "ramda": "^0.18.0",
     "twit": "^2.1.1"
   }
