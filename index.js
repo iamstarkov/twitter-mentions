@@ -21,6 +21,6 @@ function accumulate(get, options, mentions, cb) {
 export default function getMentions(tokens, sinceId, cb) {
   const client = new Twitter(tokens);
   const get = client.get.bind(client, 'statuses/mentions_timeline');
-  const options = { trim_user: true, count: 200, since_id: sinceId };
+  const options = { trim_user: false, count: 200, since_id: sinceId };
   return accumulate(get, options, [], cb);
 }
