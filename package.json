@@ -49,7 +49,7 @@
   },
   "dependencies": {
     "bignum-dec": "^1.0.1",
-    "ramda": "^0.18.0",
-    "twit": "^2.1.1"
+    "ramda": "^0.19.1",
+    "twit": "^2.2.2"
   }
 }
