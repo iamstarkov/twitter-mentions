@@ -10,9 +10,9 @@ function getNextOptions(options, mentions) {
 
 function accumulate(client, options, mentions) {
   const nextOptions = getNextOptions(options, mentions);
-  return client.get('statuses/mentions_timeline', nextOptions).then(res => {
-    const accumulatedMentions = concat(mentions, res);
-    return (isEmpty(res))
+  return client.get('statuses/mentions_timeline', nextOptions).then(({ data }) => {
+    const accumulatedMentions = concat(mentions, data);
+    return (isEmpty(data))
         ? accumulatedMentions
         : accumulate(client, nextOptions, accumulatedMentions);
   });
