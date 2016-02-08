@@ -2,10 +2,11 @@ import Twitter from 'twit';
 import dec from 'bignum-dec';
 import { pipe, last, prop, concat, merge, isEmpty } from 'ramda';
 
-const getNextOptions = (options, mentions) =>
-  (isEmpty(mentions))
+function getNextOptions(options, mentions) {
+  return (isEmpty(mentions))
     ? options
     : merge(options, { max_id: pipe(last, prop('id_str'), dec)(mentions) });
+}
 
 function accumulate(client, options, mentions) {
   const nextOptions = getNextOptions(options, mentions);
